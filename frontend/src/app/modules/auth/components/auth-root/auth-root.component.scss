@@ -1,0 +1,56 @@
+.logo {
+    color: #fff;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.body-container {
+    background-color: #252C35;
+    height: 100vh;
+    padding-top: 15%;
+    
+}
+
+.root-container {
+    width: 900px;
+    text-align: center;
+    margin:0 auto;
+
+    .title {
+        font-size: 40px;
+        font-weight: bold;
+        font-style: italic;
+        color: #fff;
+        margin-bottom: 50px;
+    }
+
+    .sign-container {
+        display:flex;
+        color:#fff;
+        align-items: center;
+        justify-content: center;
+        gap: 70px;
+
+        button {
+            width: 140px;
+            height: 50px;
+            border-radius: 10px;
+            background-color: #BD0D22;
+            color: #fff;
+            font-weight: 600;
+            margin-top:10px;
+            cursor:pointer;
+        }
+
+        button:hover {
+            background-color:#E35760
+        }
+
+        
+    }
+    
+}

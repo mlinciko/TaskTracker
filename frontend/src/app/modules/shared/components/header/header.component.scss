@@ -1,0 +1,45 @@
+.logo {
+    color: #fff;
+    position: absolute;
+    top: 24px;
+    left: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    font-style: italic;
+    cursor:pointer;
+}
+
+.wrapper {
+    background-color: #252C35;
+    height: 70px;
+
+    .header-container {
+        width: 900px;
+        height: 70px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items:center;
+
+        button {
+            width: 100px;
+            height: 30px;
+            border-radius: 6px;
+            background-color: #BD0D22;
+            color: #fff;
+            font-weight: 600;
+            margin-right:20px;
+            cursor:pointer;
+        }
+
+        button:hover {
+            background-color:#E35760
+        }
+
+        .dx-icon-user {
+            font-size: 30px;
+            color: #fff;
+            cursor:pointer;
+        }
+    }
+}

@@ -1,0 +1,19 @@
+<div class="mat-spinner-container">
+    <mat-spinner *ngIf="loading" [diameter]="30"></mat-spinner>
+</div>
+<div class="container">
+    <i class="dx-icon-user"></i>
+    <div *ngIf="user" class="info-container">        
+        <button class="edit-btn" (click)="openEditDialog()"><i class="dx-icon-edit"></i></button>
+        <div class="first-name info-item"><span>First Name:</span> {{ user.first_name }}</div>
+        <div class="last-name info-item"><span>Last Name:</span> {{ user.last_name }}</div>
+        <div class="email info-item"><span>Email:</span> {{ user.email }}</div>
+        <div class="tel info-item"><span>Mobile:</span> {{ user.tel }}</div>
+        <div class="position info-item"><span>Position:</span> {{ user.position }}</div>
+        <div class="access-level info-item"><span>Access level:</span> {{ user.access_level }}</div>
+    </div>
+</div>
+
+<dx-popup *ngIf="editPersonDialog" [(visible)]="editPersonDialog" title="Edit data" width="500px" height="500px" [showCloseButton]="true">
+    <app-add-person-dialog [data]="user" (onCloseEvent)="closeDialog($event)"></app-add-person-dialog>
+</dx-popup>

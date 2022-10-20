@@ -1,0 +1,16 @@
+<div class="logo" (click)="navigateTo('dashboard')">
+    <i class="dx-icon-todo"></i>
+    <span matTooltip="To dashboard">TaskTracker</span>
+</div>
+
+<div class="wrapper">
+    <div class="header-container">
+        <div class="left-side">
+            <button>Create a task</button>
+            <button>My tasks</button>
+        </div>
+        <div class="right-side" (click)="navigateTo('account')">
+            <i class="dx-icon-user"></i>
+        </div>
+    </div>
+</div>

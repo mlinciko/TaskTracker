@@ -1,0 +1,12 @@
+<div class="form-container">
+    <dx-form #form width="350px" [(formData)]='formData' [items]="formItems">
+    </dx-form>
+</div>
+<dx-toolbar class="form-toolbar" [width]="'100%'">
+    <dxi-item location="center" widget="dxButton"
+        [options]="{text: 'Save', stylingMode: 'outlined', type: 'default', onClick: add}">
+    </dxi-item>
+    <dxi-item location="center" widget="dxButton"
+        [options]="{text: 'Cancel', stylingMode: 'outlined', type: 'normal', onClick: dismiss}">
+    </dxi-item>
+</dx-toolbar>

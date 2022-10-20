@@ -1,0 +1,11 @@
+<app-header></app-header>
+<div class="wrapper">
+    <dx-tabs [height]="'30px'" [width]="'auto'" [selectedItem]='selectedItem' [items]="items" (onItemClick)="selectTab($event)">
+        <div *dxTemplate='let item of "tab-item"'>
+            <div class="dx-item" role="tab">
+                <span class="dx-tab-text">{{item.text}}</span>
+            </div>
+        </div>
+    </dx-tabs>
+    <router-outlet></router-outlet>
+</div>

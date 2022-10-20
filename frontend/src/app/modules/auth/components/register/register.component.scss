@@ -1,0 +1,63 @@
+.logo {
+    color: #fff;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.wrapper {
+    background-color: #252C35;
+    height: 100vh;
+    padding-top: 8%;
+
+    .container {
+        width: 400px;
+        margin: 0 auto;
+
+        .title {
+            color: #fff;
+            margin: 10px 0;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding:30px 24px 20px 24px;
+        }
+
+        button {
+            width: 100px;
+            height: 30px;
+            border-radius: 10px;
+            background-color: #BD0D22;
+            color: #fff;
+            font-weight: 600;
+            margin-top:20px;
+            cursor:pointer;
+        }
+
+        button:hover {
+            background-color:#E35760
+        }
+    }
+}
+
+:host {
+    ::ng-deep {
+        .dx-editor-filled.dx-texteditor-with-floating-label .dx-texteditor-input {
+            padding-top: 18px;
+            padding-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .dx-editor-filled.dx-texteditor-with-floating-label.dx-texteditor-empty .dx-texteditor-label {
+            font-size: 13px;
+        }
+
+        .dx-field-item:not(.dx-field-item-has-group):not(.dx-field-item-has-tabs):not(.dx-first-row):not(.dx-label-v-align) {
+            padding-top:18px;
+        }
+    }
+}
