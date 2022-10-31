@@ -1,32 +1,31 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { DxFormComponent } from 'devextreme-angular';
-import notify from 'devextreme/ui/notify';
-import { IDxFormItems } from 'src/app/models/data-models';
+import { IDxFormItems, IUser } from 'src/app/models/data-models';
+import { Utils } from 'src/app/modules/utils';
 import { DxUtils } from 'src/dx.utils';
-import { AuthService } from '../../services/auth.service';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  selector: 'app-add-employee-dialog',
+  templateUrl: './add-employee-dialog.component.html',
+  styleUrls: ['./add-employee-dialog.component.scss']
 })
-export class RegisterComponent implements OnInit {
+export class AddEmployeeDialogComponent implements OnInit, OnDestroy {
+  @Output() onCloseEvent: EventEmitter<any> = new EventEmitter();
+  @Input() userData!: IUser | null
   @ViewChild('form') form!: DxFormComponent
   formItems!: IDxFormItems
   formData: any = {}
 
-  constructor(
-    protected auth: AuthService,
-    protected router: Router,
-  ) { }
+  editing: boolean = false
+  
+  constructor() { }
 
   ngOnInit(): void {
+    this.initFormData()
     this.initFormItems()
   }
 
-  initFormItems(){
+  initFormItems() {
     this.formItems = [
       {
         editorType: 'dxTextBox',
@@ -60,7 +59,7 @@ export class RegisterComponent implements OnInit {
         dataField: 'tel',
         label: { text: 'Telephone number', visible: false },
         editorOptions: {
-          labelMode: 'floating'
+          labelMode: 'floating',
         },
         validationRules:[
           {
@@ -74,11 +73,29 @@ export class RegisterComponent implements OnInit {
                   return true;
                 else return false
               }
-              return true;
+              else return true
             },
           },
           DxUtils.requiredRule()
         ]
+      },
+      {
+        editorType: 'dxTextBox',
+        dataField: 'position',
+        label: { text: 'Position', visible: false },
+        editorOptions: {
+          labelMode: 'floating',
+        },
+        validationRules: [DxUtils.requiredRule()],
+      },
+      {
+        editorType: 'dxSelectBox',
+        dataField: 'access_level',
+        label: { text: 'Access level', visible: false },
+        editorOptions: {
+          labelMode: 'floating',
+          dataSource: Utils.getAccessLevelData()
+        },
       },
       {
         editorType: 'dxTextBox',
@@ -87,6 +104,7 @@ export class RegisterComponent implements OnInit {
         editorOptions: {
           labelMode: 'floating',
           mode: 'password',  
+          disabled: this.editing,
           onValueChanged: (e: any) => {
             if (this.form.instance.getEditor("password_confirm")?.option("value")) {
               if (e.value !== this.form.instance.getEditor("password_confirm")?.option("value"))
@@ -104,6 +122,7 @@ export class RegisterComponent implements OnInit {
         editorOptions: {
           labelMode: 'floating',
           mode: 'password', 
+          disabled: this.editing,
           onValueChanged: (e: any) => {
             if (this.form.instance.getEditor("password")?.option("value")) {
               if (e.value !== this.form.instance.getEditor("password")?.option("value"))
@@ -117,20 +136,32 @@ export class RegisterComponent implements OnInit {
     ]
   }
 
-  submitForm(): void {
-    if (this.form.instance.validate().isValid) {
-      this.auth.register(this.formData).subscribe(
-        (res) => {
-          if (res.status) {
-            this.router.navigate(['../dashboard'])
-          }
-        },
-        (err: HttpErrorResponse) => {
-          notify({ message: err, type: "error", width: "auto"});
-        }
-      )
+  initFormData(): void {
+    if (this.userData) {
+      this.formData = this.userData
+      this.editing = true
     }
-      
+    else {
+      this.formData = {}
+      this.editing = false
+    }
+  }
+
+  add = (e: any) => {
+    if (this.form.instance.validate().isValid) {
+      delete this.formData['password_confirm']
+      this.onCloseEvent.emit({editing: this.editing, formData: this.formData});
+      this.initFormItems();
+    }
+  }
+
+  dismiss = (e: any) => {
+    this.onCloseEvent.emit(null);
+    this.initFormItems();
+  }
+
+  ngOnDestroy(): void {
+    this.formData = {}
   }
 
 }

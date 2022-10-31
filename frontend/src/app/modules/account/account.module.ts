@@ -8,6 +8,8 @@ import { OrgAccComponent } from './components/org-acc/org-acc.component';
 import { SharedModule } from '../shared/shared.module';
 import { AddPersonDialogComponent } from './components/add-person-dialog/add-person-dialog.component';
 import { EmployeesListComponent } from './components/employees-list/employees-list.component';
+import { ChangePasswordDialogComponent } from './components/change-password-dialog/change-password-dialog.component';
+import { AddEmployeeDialogComponent } from './components/add-employee-dialog/add-employee-dialog.component';
 
 
 
@@ -17,7 +19,9 @@ import { EmployeesListComponent } from './components/employees-list/employees-li
     PersonAccComponent,
     OrgAccComponent,
     AddPersonDialogComponent,
-    EmployeesListComponent
+    EmployeesListComponent,
+    ChangePasswordDialogComponent,
+    AddEmployeeDialogComponent
   ],
   imports: [
     CommonModule,

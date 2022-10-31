@@ -2,8 +2,8 @@
     <mat-spinner *ngIf="loading" [diameter]="30"></mat-spinner>
 </div>
 <div class="container">
-    <i class="dx-icon-user"></i>
-    <div *ngIf="user" class="info-container">        
+    <i class="dx-icon-user"></i>     
+    <div *ngIf="user" class="info-container">   
         <button class="edit-btn" (click)="openEditDialog()"><i class="dx-icon-edit"></i></button>
         <div class="first-name info-item"><span>First Name:</span> {{ user.first_name }}</div>
         <div class="last-name info-item"><span>Last Name:</span> {{ user.last_name }}</div>
@@ -12,8 +12,13 @@
         <div class="position info-item"><span>Position:</span> {{ user.position }}</div>
         <div class="access-level info-item"><span>Access level:</span> {{ user.access_level }}</div>
     </div>
+    <dx-button class="change-password-button" stylingMode="outlined" type="default" (onClick)="openChangePassword()">Change password</dx-button>
 </div>
 
-<dx-popup *ngIf="editPersonDialog" [(visible)]="editPersonDialog" title="Edit data" width="500px" height="500px" [showCloseButton]="true">
-    <app-add-person-dialog [data]="user" (onCloseEvent)="closeDialog($event)"></app-add-person-dialog>
+<dx-popup *ngIf="editPersonDialog && user" [(visible)]="editPersonDialog" title="Edit data" width="500px" height="500px" [showCloseButton]="true">
+    <app-add-person-dialog [data]="user" (onCloseEvent)="closeEditPersonDialog($event)"></app-add-person-dialog>
+</dx-popup>
+
+<dx-popup *ngIf="changePasswordDialog && user" [(visible)]="changePasswordDialog" title="Change pasword" width="500px" height="360px" [showCloseButton]="true">
+    <app-change-password-dialog [data]="user" (onCloseEvent)="closeChangePasswordDialog($event)"></app-change-password-dialog>
 </dx-popup>

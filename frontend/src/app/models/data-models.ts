@@ -12,30 +12,37 @@ export interface IAppDxTabItem {
   text: string
   path: string
   template: string
+  visible: boolean
 }
 
 export interface IUser {
-  id: string,
+  user_id: string,
   first_name: string,
   last_name: string,
   email: string,
   tel?: string,
   position?: string,
   access_level: string,
-  organisation?: IOrganisation,
+  organisation_id?: string,
 }
 
 export interface IOrganisation {
+  organisation_id: string,
   name: string,
   inn: string, 
   address: string,
+  description: string,
 }
 
 export class User {
   private user: IUser;
 
-  constructor(user: any) {
+  constructor(user?: any) {
     this.user = user;
+  }
+
+  public get id(): string {
+    return this.user.user_id;
   }
 
   public get fullUser(): IUser {
@@ -66,8 +73,12 @@ export class User {
     return this.user.access_level;
   }
 
-  public get organisation(): IOrganisation | undefined {
-    return this.user.organisation;
+  public get getOrganisationId(): string | undefined {
+    return this.user.organisation_id;
+  }
+
+  public set setOrganisationId(id: string) {
+    this.user.organisation_id = id;
   }
 
 }

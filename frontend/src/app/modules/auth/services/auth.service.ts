@@ -1,9 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError, timeout, TimeoutError } from 'rxjs';
-import { IUser, User } from 'src/app/models/data-models';
+import { IUser } from 'src/app/models/data-models';
 import { environment } from 'src/environments/environment';
 import { JwtHelperService } from "@auth0/angular-jwt";
+import { UserService } from '../../account/services/user.service';
+import { Router } from '@angular/router';
 
 const helper = new JwtHelperService();
 
@@ -13,15 +15,17 @@ const helper = new JwtHelperService();
 export class AuthService {
   restUrl = `${environment.baseUrl}/api/auth/`
 
-  protected acessToken!: string
+  protected accessToken!: string
 
   constructor(
     protected http: HttpClient,
+    protected user: UserService,
+    protected router: Router,
   ) {
    }
 
   initAuthData(data: {user: IUser, accessToken: string}): void {
-    this.acessToken = data.accessToken
+    this.accessToken = data.accessToken
   }
 
   register(user: IUser): Observable<any> {
@@ -32,7 +36,8 @@ export class AuthService {
         (res: any) => {
           if (res.user && res.accessToken && res.refreshToken) {
             this.initAuthData(res)
-            localStorage.setItem("__access_token", this.acessToken);
+            this.user.initUser(res.user)
+            localStorage.setItem("__access_token", this.accessToken);
             localStorage.setItem("__refresh_token", res.refreshToken)
             return { status: true, message: "Registration completed successfully" }
           }
@@ -58,7 +63,8 @@ export class AuthService {
         (res: any) => {
           if (res.user && res.accessToken && res.refreshToken) {
             this.initAuthData(res)
-            localStorage.setItem("__access_token", this.acessToken);
+            this.user.initUser(res.user)
+            localStorage.setItem("__access_token", this.accessToken);
             localStorage.setItem("__refresh_token", res.refreshToken);
             return { status: true, message: "Authorization completed successfully" }
           }
@@ -66,6 +72,7 @@ export class AuthService {
         }
       ),
       catchError((e) => {
+        console.log(e)
         if (e instanceof TimeoutError) {
           return throwError("Server not responding");
         }
@@ -77,13 +84,15 @@ export class AuthService {
   }
 
   logout(): void {
-    // this.token = "";
     localStorage.removeItem("__access_token");
     localStorage.removeItem("__refresh_token");
+    this.user.initUser(null)
+    this.router.navigate(['/'])
   }
 
-  registerByAdmin(user: IUser): Observable<any> {
-    return this.http.post(`${this.restUrl}register/`, user)
+  registerByAdmin(orgId: string, user: IUser): Observable<any> {
+    const header = new HttpHeaders({'Authorization': `Bearer ${localStorage.getItem("__access_token")}`})
+    return this.http.post(`${this.restUrl}register-by-admin/`, {...user, organisation_id: orgId}, {headers: header } )
     .pipe(
       map(
         (res: any) => {
@@ -105,27 +114,6 @@ export class AuthService {
     )
   }
 
-  // getUserByToken(): Observable<any> {
-  //   let customHeaders = new HttpHeaders({
-  //     'X-Verification-Code': 'verification_code',
-  //     'X-Cookie': `${localStorage.getItem("__refresh_token")}`,
-  //   });
-  //   return this.http.get(`${this.restUrl}`, { headers: customHeaders})
-  //   .pipe(
-  //     map(
-  //       (res: any) => {
-  //         if (res.user && res.accessToken && res.refreshToken) {
-  //           this.initAuthData(res)
-  //           localStorage.setItem("__access_token", this.acessToken);
-  //           localStorage.setItem("__refresh_token", res.refreshToken);
-  //           return { status: true, message: "Authorization completed successfully", user: res.user }
-  //         }
-  //         return { status: true, message: "Authorisation Error" }
-  //       }
-  //     )
-  //   )
-  // }
-
   checkToken(): boolean {
     if (localStorage.getItem("__access_token") && localStorage.getItem("__refresh_token"))
       return true
@@ -133,7 +121,7 @@ export class AuthService {
   }
 
   decode(): any {
-    return helper.decodeToken(this.acessToken);
+    return helper.decodeToken(this.accessToken);
   }
 
 }

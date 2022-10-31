@@ -1,9 +1,8 @@
 <div class="form-container">
-    <button class="edit-btn" (click)="edirData()"><i class="dx-icon-edit"></i></button>
-    <dx-form #form width="350px" [(formData)]='formData' [items]="formItems" [disabled]="formDisabled">
-    </dx-form>
+    <dx-form #form width="350px" [(formData)]='formData' [items]="formItems"></dx-form>
 </div>
-<dx-toolbar *ngIf="!formDisabled" class="form-toolbar" [width]="'100%'">
+
+<dx-toolbar class="form-toolbar" [width]="'100%'">
     <dxi-item location="center" widget="dxButton"
         [options]="{text: 'Save', stylingMode: 'outlined', type: 'default', onClick: add}">
     </dxi-item>

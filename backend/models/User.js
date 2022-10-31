@@ -40,19 +40,8 @@ const userSchema = new Schema(
       default: 'default',
       required: true
     },
-    organisation: {
-      type: {
-        name: {
-          type: String,
-          required: true,
-        },
-        inn: {
-          type: String,
-        },
-        address: {
-          type: String,
-        },
-      },
+    organisation_id: {
+      type: String,
       required: false,
     }
   },

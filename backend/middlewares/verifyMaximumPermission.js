@@ -1,4 +1,4 @@
-export const verifyPermission = async (req, res, next) => {
+export const verifyMaximumPermission = async (req, res, next) => {
   const user = req.user
 
   if (!user) {

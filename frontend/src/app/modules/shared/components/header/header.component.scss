@@ -41,5 +41,24 @@
             color: #fff;
             cursor:pointer;
         }
+
+        .right-side {
+            margin-left:auto;
+        }
+
+        .exit-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #fff;
+            cursor:pointer;
+            margin-left: 20px;
+
+            img {
+                width: 20px;
+                height: 20px;
+                margin: 5px 0 0 7px;
+            }
+        }
     }
 }

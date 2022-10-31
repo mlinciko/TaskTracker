@@ -1,4 +1,5 @@
 import User from '../models/User.js'
+import argon2 from 'argon2'
 
 export const getUser = async (req, res, next) => {
   const userId = req.user?.user_id
@@ -14,18 +15,18 @@ export const getUser = async (req, res, next) => {
       return res.status(404).json({ message: 'User not found' })
     }
 
-    req.user = { 
-      user_id: user._id, 
-      first_name: user.first_name, 
-      last_name: user.last_name,
-      email: user.email, 
-      tel: user.tel,
-      position: user.position,
-      access_level: user.access_level,
-      organisation: user.organisation,
-    }
+    res.json(
+      { 
+        user_id: user._id, 
+        first_name: user.first_name, 
+        last_name: user.last_name,
+        email: user.email, 
+        tel: user.tel,
+        position: user.position,
+        access_level: user.access_level,
+        organisation_id: user.organisation_id,
+    })
 
-    next('route')
   } catch (e) {
     console.log('*getUser service')
     next(e)
@@ -91,18 +92,18 @@ export const updateUser = async (req, res, next) => {
         await User.updateOne({_id: userId}, newData)
         user = await User.findOne({ _id: userId })
 
-        req.user = { 
-          user_id: user.id,
-          first_name: user.first_name, 
-          last_name: user.last_name,
-          email: user.email, 
-          tel: user.tel,
-          position: user.position,
-          access_level: user.access_level,
-          organisation: user.organisation
-        }
+        res.json(
+          { 
+            user_id: user.id,
+            first_name: user.first_name, 
+            last_name: user.last_name,
+            email: user.email, 
+            tel: user.tel,
+            position: user.position,
+            access_level: user.access_level,
+            organisation_id: user.organisation_id
+        })
     
-        next('route')
       } catch (e) {
         console.log('updateUser error')
         next(e)
@@ -110,19 +111,16 @@ export const updateUser = async (req, res, next) => {
 }
 
 export const removeUser = async (req, res, next) => {
-    const email = req.body?.email
+    const userId = req.query?.user_id
   
-    if (!email) {
+    if (!userId) {
       return res
         .status(400)
-        .json({ message: 'Email must be provided' })
+        .json({ message: 'User id must be provided' })
     }
   
     try {
-      let user
-      if (email.includes('@')) {
-        user = await User.findOne({ email: email })
-      } 
+      let user = await User.findById(userId)
   
       if (!user) {
         return res.status(404).json({ message: 'User not found' })
@@ -132,7 +130,7 @@ export const removeUser = async (req, res, next) => {
   
       res
         .status(200)
-        .json({ message: `User ${email} has been removed` })
+        .json({ message: `User ${user.email} has been removed` })
     } catch (e) {
       console.log('*removeUser service')
       next(e)
@@ -140,5 +138,91 @@ export const removeUser = async (req, res, next) => {
 }
 
 export const getAllEmployees = async (req, res, next) => {
-  
+  const organisationId = req.query?.organisation_id
+
+  if (!organisationId) {
+    return res
+        .status(400)
+        .json({ message: 'Organisation id must be provided' })
+  }
+
+  try {
+    let employees = []
+    employees = await User.find({ organisation_id: organisationId })
+    
+    if (!employees) {
+      return res.status(404).json({ message: 'Employees not found' })
+    }
+
+    let mappedEmployees = []
+
+    employees.forEach((item) => {
+      mappedEmployees.push({
+          user_id: item._id,
+          first_name: item.first_name,
+          last_name: item.last_name,
+          email: item.email,
+          tel: item.tel,
+          access_level: item.access_level,
+          position: item.position
+        }
+      )
+    })
+
+    res
+      .status(200)
+      .json(mappedEmployees)
+
+  } catch (e) {
+    console.log('*changePassord error')
+    next(e)
+  }
+}
+
+export const changeUserPassowrd = async(req, res, next) => {
+  const userId = req.body?.user_id
+  const currentPassword = req.body?.current_password
+  const newPassowrd = req.body?.new_password
+
+  if (!userId) {
+    return res
+        .status(400)
+        .json({ message: 'User id must be provided' })
+  } 
+
+  if (!currentPassword) {
+    return res
+        .status(400)
+        .json({ message: 'Current password must be provided' })
+  }
+
+  if (!newPassowrd) {
+    return res
+        .status(400)
+        .json({ message: 'New password must be provided' })
+  }
+
+  try {
+    let user
+    user = await User.findOne({ _id: userId }).select('+password')
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' })
+    }
+
+    const isPasswordCorrect = await argon2.verify(user.password, currentPassword)
+    if (!isPasswordCorrect) {
+      return res.status(403).json({ message: 'Wrong credentials' })
+    }
+
+    const hashedPassword = await argon2.hash(newPassowrd)
+    await User.updateOne({_id: userId}, {password: hashedPassword})
+
+    res
+      .status(200)
+      .json({ message: `Password has been changed` })
+
+  } catch (e) {
+    console.log('*changePassord error')
+    next(e)
+  }
 }

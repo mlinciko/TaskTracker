@@ -1,0 +1,21 @@
+:host {
+    ::ng-deep {
+        .dx-editor-filled.dx-texteditor-with-floating-label .dx-texteditor-input {
+            padding-top: 18px;
+            padding-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .dx-editor-filled.dx-texteditor-with-floating-label.dx-texteditor-empty .dx-texteditor-label {
+            font-size: 13px;
+        }
+
+        .dx-field-item:not(.dx-field-item-has-group):not(.dx-field-item-has-tabs):not(.dx-first-row):not(.dx-label-v-align) {
+            padding-top:18px;
+        }
+
+        .dx-form {
+            margin: 0 auto;
+        }
+    }
+}

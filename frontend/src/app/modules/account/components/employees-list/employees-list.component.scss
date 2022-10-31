@@ -1,0 +1,30 @@
+.employess-container {
+    padding: 60px 20px 20px 20px;
+}
+
+:host {
+    ::ng-deep {
+        .employess-container .dx-datagrid{
+            font-size:12px!important;
+        }
+
+        .dx-datagrid-headers .dx-datagrid-table .dx-row > td {
+            font-size:12px!important;
+        }
+
+        .dx-editor-cell .dx-texteditor .dx-texteditor-input {
+            height: 35px
+        }
+        .dx-datagrid .dx-row > td {
+            padding: 7px;
+        }
+
+        .dx-toolbar .dx-toolbar-label {
+            font-size: 16px;
+        }
+
+        .dx-datagrid .dx-row > td {
+            font-size: 13px;
+        }
+    }
+}

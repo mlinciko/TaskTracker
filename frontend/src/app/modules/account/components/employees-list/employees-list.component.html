@@ -1,1 +1,12 @@
-<p>employees-list works!</p>
+<div class="employess-container">
+    <dx-data-grid width="100%" [columns]='columns' [wordWrapEnabled]="wordWrapEnabled" height='450px'
+        [dataSource]="dataSource" [showColumnLines]="showColumnLines" (onToolbarPreparing)="onToolbarPreparing($event)">
+        <dxo-filter-row visible="true"></dxo-filter-row>
+        <dxo-header-filter visible="true"></dxo-header-filter>
+        <dxo-editing mode="row" [allowDeleting]="true"></dxo-editing>
+    </dx-data-grid>
+</div>
+
+<dx-popup *ngIf="addEmployeeDialog" [(visible)]="addEmployeeDialog" title="Add a new employee" width="600px" height="700px" [showCloseButton]="true">
+    <app-add-employee-dialog [userData]="selectedUser" (onCloseEvent)="closeAddEmployeeDialog($event)"></app-add-employee-dialog>
+</dx-popup>

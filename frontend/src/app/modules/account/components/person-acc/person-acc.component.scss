@@ -1,19 +1,31 @@
 .container {
-    width: 400px;
-    margin:40px;
+    margin: 40px 40px 40px 70px;
+    flex-direction: row;
+    display: flex;
 
     .dx-icon-user {
         font-size: 70px;
         margin-top:30px;
+        width: 60px;
+        margin-right: 70px;
+    }
+
+    .change-password-button {
+        margin-left: auto;
+        display: block;
+        width: 220px;
     }
 
     .info-container {
-        position:absolute;
-        margin-left:8%;
+        width: 400px;
+        position:relative;
 
         .info-item {
             margin-bottom: 5px;
             border-bottom: 1px solid #cecece;
+            border-radius: 4px;
+            padding: 5px;
+            background-color: rgba(255,255,255, 0.5);
         }
 
         .info-item span {
