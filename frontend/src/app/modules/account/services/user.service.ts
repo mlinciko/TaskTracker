@@ -83,6 +83,10 @@ export class UserService {
     return this.user.value.dashboardId
   }
 
+  getUserFullName(): string {
+    return this.user.value.firstName + " " + this.user.value.lastName 
+  }
+
   isMaximumUser(): boolean {
     if (this.user.value.accessLevel === 'maximum')
       return true

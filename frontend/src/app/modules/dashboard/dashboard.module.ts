@@ -8,6 +8,7 @@ import { DashTrackComponent } from './components/dash-track/dash-track.component
 import { AddTaskComponent } from './components/add-task/add-task.component';
 import { ViewTaskComponent } from './components/view-task/view-task.component';
 import { UserTasksComponent } from './components/user-tasks/user-tasks.component';
+import { TaskCommentsComponent } from './components/task-comments/task-comments.component';
 
 
 
@@ -17,7 +18,8 @@ import { UserTasksComponent } from './components/user-tasks/user-tasks.component
     DashTrackComponent,
     AddTaskComponent,
     ViewTaskComponent,
-    UserTasksComponent
+    UserTasksComponent,
+    TaskCommentsComponent
   ],
   imports: [
     CommonModule,

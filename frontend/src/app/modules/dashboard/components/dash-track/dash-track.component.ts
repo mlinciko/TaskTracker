@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import notify from 'devextreme/ui/notify';
-import { Status, Task } from 'src/app/models/data-models';
+import { Status, StatusesColor, Task, StatusType } from 'src/app/models/data-models';
 import { UserService } from 'src/app/modules/account/services/user.service';
 import { DashboardService } from '../../services/dashboard.service';
 
@@ -14,6 +14,7 @@ export class DashTrackComponent implements OnInit {
   @Input() status!: Status
 
   tasks: Task[] = []
+  statusesColor = StatusesColor
 
   constructor(
     protected dashboard: DashboardService,
@@ -36,6 +37,10 @@ export class DashTrackComponent implements OnInit {
         }
       )
     }
+  }
+
+  getTaskStyle(name: string): string {
+    return 'border-left: 2px solid '+ this.statusesColor[name  as StatusType]+';'
   }
 
 }

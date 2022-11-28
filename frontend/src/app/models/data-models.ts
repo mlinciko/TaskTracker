@@ -121,6 +121,13 @@ export interface Task {
   deadline: string,
 }
 
+export interface IComment {
+  id: string,
+  body: string,
+  author: string,
+  task_id: string,
+}
+
 export const StatusesColor = {
   'Stack': '#808080',
   'Analysis': '#BE9FE1',

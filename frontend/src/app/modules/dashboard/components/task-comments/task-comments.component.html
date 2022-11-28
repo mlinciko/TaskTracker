@@ -1,0 +1,7 @@
+<div class="comm-container">
+    <button class="add-button" (click)="addRow()">+</button>
+    <dx-data-grid #dataGrid width="100%" [columns]='columns' [wordWrapEnabled]="true" height='auto' (onEditorPreparing)="editorPreparing($event)"
+        [dataSource]="dataSource" [showColumnLines]="true" [showBorders]="true" (onToolbarPreparing)="onToolbarPreparing($event)" (onSaving)="saveComment($event)">
+        <dxo-editing mode="row" [allowUpdating]="true" [allowDeleting]="true" ></dxo-editing>
+    </dx-data-grid>
+</div>

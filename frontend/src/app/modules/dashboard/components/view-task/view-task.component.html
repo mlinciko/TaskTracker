@@ -45,17 +45,5 @@
         <dx-text-area class="dx-state-focused" label="Description" labelMode='floating' [value]="task.description"
         [readOnly]="true" stylingMode='outlined' height="auto"></dx-text-area>
     </div>
-    <!-- <div class="form-container">
-        <dx-form #form width="700px" [(formData)]='formData' [items]="formItems">
-        </dx-form>
-    </div>
-
-    <dx-toolbar [width]="'100%'">
-        <dxi-item location="center" widget="dxButton"
-            [options]="{text: 'Save', stylingMode: 'outlined', type: 'default', onClick: saveTask}">
-        </dxi-item>
-        <dxi-item location="center" widget="dxButton"
-            [options]="{text: 'Cancel', stylingMode: 'outlined', type: 'normal', onClick: cancel}">
-        </dxi-item>
-    </dx-toolbar> -->
 </div>
+<app-task-comments *ngIf="task" [taskId]="task._id"></app-task-comments>
