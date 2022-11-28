@@ -1,6 +1,7 @@
 import argon2 from 'argon2'
 import { COOKIE_NAME } from '../config/index.js'
 import User from '../models/User.js'
+import Dashboard from '../models/Dashboard.js'
 import Organisation from '../models/Organisation.js'
 
 export const registerUser = async (req, res, next) => {
@@ -59,6 +60,7 @@ export const registerUser = async (req, res, next) => {
         .json({ message: 'Telephone number already in use' })
     }
 
+    const dashboard = await Dashboard.create({name: ""})
     const hashedPassword = await argon2.hash(password)
 
     const newUser = await User.create({
@@ -68,6 +70,7 @@ export const registerUser = async (req, res, next) => {
       tel: tel,
       password: hashedPassword,
       access_level: accessLevel,
+      dashboard_id: dashboard._id
     })
 
     req.user = { 
@@ -78,7 +81,8 @@ export const registerUser = async (req, res, next) => {
       tel: tel,
       position: newUser.position,
       access_level: newUser.access_level,
-      organisation_id: newUser.organisation_id
+      organisation_id: newUser.organisation_id,
+      dashboard_id: newUser.dashboard_id,
     }
 
     next('route')
@@ -97,6 +101,7 @@ export const registerUserByAdmin = async (req, res, next) => {
   const accessLevel = req.body?.access_level ? req.body?.access_level : "default"
   const organisationId = req.body?.organisation_id
   const position = req.body?.position
+  const dashboardId = req.body?.dashboard_id
 
 
   if (!firstName) {
@@ -141,6 +146,12 @@ export const registerUserByAdmin = async (req, res, next) => {
       .json({ message: 'Mobile number must be provided' })
   }
 
+  if (!dashboardId) {
+    return res
+      .status(400)
+      .json({ message: 'Dashboard Id number must be provided' })
+  }
+
   try {
     const [existingUserByEmail] = await User.find({email})
     if (existingUserByEmail) {
@@ -163,6 +174,13 @@ export const registerUserByAdmin = async (req, res, next) => {
         .json({ message: 'Organisation not found' })
     }
 
+    const userDash = await Dashboard.findById(dashboardId)
+    if (!userDash) {
+      return res
+        .status(404)
+        .json({ message: 'Dashboard not found' })
+    }
+
     const hashedPassword = await argon2.hash(password)
 
     const newUser = await User.create({
@@ -174,6 +192,7 @@ export const registerUserByAdmin = async (req, res, next) => {
       access_level: accessLevel,
       organisation_id: organisationId,
       position: position,
+      dashboard_id: dashboardId,
     })
   
 
@@ -186,6 +205,7 @@ export const registerUserByAdmin = async (req, res, next) => {
       position: newUser.position,
       access_level: newUser.access_level,
       organisation_id: newUser.organisation_id,
+      dashboard_id: newUser.dashboard_id,
     }
 
     next('route')
@@ -230,6 +250,7 @@ export const loginUser = async (req, res, next) => {
       position: user.position,
       access_level: user.access_level,
       organisation_id: user.organisation_id,
+      dashboard_id: user.dashboard_id,
     }
 
     next('route')

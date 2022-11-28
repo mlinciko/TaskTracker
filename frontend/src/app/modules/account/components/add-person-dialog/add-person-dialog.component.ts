@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { DxFormComponent } from 'devextreme-angular';
 import { IDxFormItems, IUser } from 'src/app/models/data-models';
 import { DxUtils } from 'src/dx.utils';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-add-person-dialog',
@@ -15,7 +16,9 @@ export class AddPersonDialogComponent implements OnInit {
   formData: any = {}
 
   @Input() data!: IUser
-  constructor() { }
+  constructor(
+    protected user: UserService,
+  ) { }
 
   ngOnInit(): void {
     this.initFormItems()
@@ -76,7 +79,8 @@ export class AddPersonDialogComponent implements OnInit {
         dataField: 'position',
         label: { text: 'Position', visible: false },
         editorOptions: {
-          labelMode: 'floating'
+          labelMode: 'floating',
+          disabled: !this.user.isMediumUser(),
         },
       },
     ]

@@ -1,0 +1,17 @@
+<app-header></app-header>
+<div class="task-container">
+    <div class="task-title">Creating a new task</div>
+    <div class="form-container">
+        <dx-form #form width="100%" [(formData)]='formData' [items]="formItems">
+        </dx-form>
+    </div>
+
+    <dx-toolbar [width]="'100%'">
+        <dxi-item location="center" widget="dxButton"
+            [options]="{text: 'Save', stylingMode: 'outlined', type: 'default', onClick: saveTask}">
+        </dxi-item>
+        <dxi-item location="center" widget="dxButton"
+            [options]="{text: 'Cancel', stylingMode: 'outlined', type: 'normal', onClick: cancel}">
+        </dxi-item>
+    </dx-toolbar>
+</div>

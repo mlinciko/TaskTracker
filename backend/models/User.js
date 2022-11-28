@@ -43,6 +43,10 @@ const userSchema = new Schema(
     organisation_id: {
       type: String,
       required: false,
+    },
+    dashboard_id: {
+      type: String,
+      required: true,
     }
   },
   {

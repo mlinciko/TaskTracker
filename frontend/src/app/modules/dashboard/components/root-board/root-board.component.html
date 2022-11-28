@@ -1,2 +1,18 @@
 <app-header></app-header>
+<div class="dash-container">
+    <div *ngIf="organisationName; else noOrgTemplate" class="dash-title">Dashboard of {{organisationName}}</div>
+    <ng-template #noOrgTemplate>
+        <div class="dash-title">Dashboard</div>
+    </ng-template>
+    <div *ngIf="statuses.length > 0; else noData" class="tracks">
+        <div *ngFor="let status of statuses" class="track-item">
+            <app-dash-track [status]="status"></app-dash-track>
+        </div>
+    </div>
 
+    <ng-template #noData>
+        <div class="no-data-text">
+           No data 
+        </div>
+    </ng-template>
+</div>

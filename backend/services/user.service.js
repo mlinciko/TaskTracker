@@ -25,6 +25,7 @@ export const getUser = async (req, res, next) => {
         position: user.position,
         access_level: user.access_level,
         organisation_id: user.organisation_id,
+        dashboard_id: user.dashboard_id,
     })
 
   } catch (e) {
@@ -101,7 +102,8 @@ export const updateUser = async (req, res, next) => {
             tel: user.tel,
             position: user.position,
             access_level: user.access_level,
-            organisation_id: user.organisation_id
+            organisation_id: user.organisation_id,
+            dashboard_id: user.dashboard_id
         })
     
       } catch (e) {
@@ -175,6 +177,43 @@ export const getAllEmployees = async (req, res, next) => {
 
   } catch (e) {
     console.log('*changePassord error')
+    next(e)
+  }
+}
+
+export const getAllExecutors = async(req, res, next) => {
+  const organisationId = req.query?.organisation_id
+
+  if (!organisationId) {
+    return res
+        .status(400)
+        .json({ message: 'Organisation id must be provided' })
+  }
+
+  try {
+    let employees = []
+    employees = await User.find({ organisation_id: organisationId })
+    
+    if (!employees) {
+      return res.status(404).json({ message: 'Employees not found' })
+    }
+
+    let executors = []
+
+    employees.forEach((item) => {
+      executors.push({
+          user_id: item._id,
+          name: `${item.first_name} ${item.last_name}`
+        }
+      )
+    })
+
+    res
+      .status(200)
+      .json(executors)
+
+  } catch (e) {
+    console.log('*getAllExecutors error')
     next(e)
   }
 }

@@ -1,0 +1,32 @@
+:host {
+    ::ng-deep {
+        .dx-editor-filled.dx-texteditor-with-floating-label .dx-texteditor-input {
+            padding-top: 18px;
+            padding-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .dx-editor-filled.dx-texteditor-with-floating-label.dx-texteditor-empty .dx-texteditor-label {
+            font-size: 13px;
+        }
+
+        .dx-field-item:not(.dx-field-item-has-group):not(.dx-field-item-has-tabs):not(.dx-first-row):not(.dx-label-v-align) {
+            padding-top:18px;
+        }
+    }
+}
+
+.task-container {
+    width: 1000px;
+    margin: 40px auto;
+    box-shadow: 0 0 10px 5px rgb(221 221 221);
+    border-radius: 5px;
+    padding: 20px;
+}
+
+.task-container  .task-title {
+    margin: 0 20px 20px 0;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+}

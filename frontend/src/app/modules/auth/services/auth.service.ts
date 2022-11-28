@@ -90,9 +90,14 @@ export class AuthService {
     this.router.navigate(['/'])
   }
 
-  registerByAdmin(orgId: string, user: IUser): Observable<any> {
+  registerByAdmin(dashId: string, orgId: string, user: IUser): Observable<any> {
     const header = new HttpHeaders({'Authorization': `Bearer ${localStorage.getItem("__access_token")}`})
-    return this.http.post(`${this.restUrl}register-by-admin/`, {...user, organisation_id: orgId}, {headers: header } )
+    const body = {
+      ...user,
+      organisation_id: orgId,
+      dashboard_id: dashId,
+    }
+    return this.http.post(`${this.restUrl}register-by-admin/`, body, {headers: header } )
     .pipe(
       map(
         (res: any) => {

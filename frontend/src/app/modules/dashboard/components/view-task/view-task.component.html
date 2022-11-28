@@ -1,0 +1,61 @@
+<app-header></app-header>
+<div *ngIf="task" class="task-container">
+
+    <div class="task-header">
+        <div class="task-info">
+            <div class="task-general">
+                <div class="task-name"><span>Name: </span>{{task.name}}</div>
+                <dx-select-box dataField='status_id' label="Status" labelMode='floating' stylingMode='outlined' [dataSource]="statuses"
+                valueExpr="id" displayExpr="name" [value]="task.status._id" width="180px"
+                (onSelectionChanged)="changeTaskStatus($event)"></dx-select-box>                
+            </div>
+            <div class="task-theme">
+                <dx-text-box class="dx-state-focused" label="Theme" labelMode='floating' [value]="task.theme" 
+                [readOnly]="true" stylingMode='outlined' [activeStateEnabled]="true"></dx-text-box>
+            </div>
+        </div>
+
+        <div class="task-details">
+            <div class="task-users">
+                <div class="task-creator">
+                    creator:
+                    <span class="task-creator__name">{{task.creator.first_name}} {{task.creator.last_name}}</span>
+                </div>
+                <div class="task-executor">
+                    executor:
+                    <span class="task-executor__name">{{task.executor.first_name}} {{task.executor.last_name}}</span>
+                </div>
+            </div>
+
+            <div class="task-dates">
+                <div class="task-deadline">
+                    deadline: 
+                    <span>{{task.deadline}}</span>
+                </div>
+                <div class="task-creation-date">
+                    created at: 
+                    <span>{{task.createdAt | date:'dd.MM.yyyy'}}</span>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="task-desc">
+        <dx-text-area class="dx-state-focused" label="Description" labelMode='floating' [value]="task.description"
+        [readOnly]="true" stylingMode='outlined' height="auto"></dx-text-area>
+    </div>
+    <!-- <div class="form-container">
+        <dx-form #form width="700px" [(formData)]='formData' [items]="formItems">
+        </dx-form>
+    </div>
+
+    <dx-toolbar [width]="'100%'">
+        <dxi-item location="center" widget="dxButton"
+            [options]="{text: 'Save', stylingMode: 'outlined', type: 'default', onClick: saveTask}">
+        </dxi-item>
+        <dxi-item location="center" widget="dxButton"
+            [options]="{text: 'Cancel', stylingMode: 'outlined', type: 'normal', onClick: cancel}">
+        </dxi-item>
+    </dx-toolbar> -->
+</div>

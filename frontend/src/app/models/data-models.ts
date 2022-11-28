@@ -24,6 +24,7 @@ export interface IUser {
   position?: string,
   access_level: string,
   organisation_id?: string,
+  dashboard_id: string,
 }
 
 export interface IOrganisation {
@@ -81,4 +82,51 @@ export class User {
     this.user.organisation_id = id;
   }
 
+  public get dashboardId(): string {
+    return this.user.dashboard_id;
+  }
+
 }
+
+export interface Status {
+  id: string,
+  name: string,
+}
+
+export interface Task {
+  _id: string,
+  name: string,
+  theme: string,
+  description: string,
+  status: {
+    _id: string,
+    name: string,
+  },
+  executor: {
+    _id: string,
+    first_name: string,
+    last_name: string,
+  },
+  creator: {
+    _id: string,
+    first_name: string,
+    last_name: string,
+  },
+  dashborad: {
+    _id: string,
+    name: string,
+  },
+  createdAt: string,
+  updatedAt: string,
+  deadline: string,
+}
+
+export const StatusesColor = {
+  'Stack': '#808080',
+  'Analysis': '#BE9FE1',
+  'Developing': '#FF8C69',
+  'Testing': '#43BCD7',
+  'Completed': '#75AB05'
+}
+
+export type StatusType = 'Stack' | 'Analysis' | 'Developing' | 'Testing' | 'Completed'

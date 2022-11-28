@@ -126,6 +126,7 @@ export class EmployeesListComponent implements OnInit {
         location: 'after',
         options: {
           visible: this.user.isMediumUser(),
+          disabled: this.orgId ? false : true,
           icon: 'add',
           hint: 'Add a new employee',
           onClick: (e: any) => {
@@ -183,8 +184,10 @@ export class EmployeesListComponent implements OnInit {
   }
 
   createUser(user: IUser): void {
-    if (this.orgId) {
-      this.auth.registerByAdmin(this.orgId, user).subscribe(
+    const dashId = this.user.getDashboardId()
+
+    if (this.orgId && dashId) {
+      this.auth.registerByAdmin(dashId, this.orgId, user).subscribe(
         (res) => {
           this.loadData()
         },
@@ -195,7 +198,7 @@ export class EmployeesListComponent implements OnInit {
         }
       )
     }
-    
+    else notify({ message: "Unexpected error", type: "error", width: "auto"});
   }
 
   updateUser(user: IUser): void {

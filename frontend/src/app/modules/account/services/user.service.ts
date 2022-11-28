@@ -54,6 +54,10 @@ export class UserService {
     return this.http.get<IUser[]>(`${this.restUrl}employees/`, { params: { organisation_id: orgId }, headers: header })
   }
 
+  getExecutors(orgId: string): Observable<{user_id: string, name: string}[]> {
+    return this.http.get<{user_id: string, name: string}[]>(`${this.restUrl}executors/`, {params: { organisation_id: orgId } })
+  }
+
   removeUser(id: string): Observable<any> {
     const header = new HttpHeaders({'Authorization': `Bearer ${localStorage.getItem("__access_token")}`})
     return this.http.delete(`${this.restUrl}remove/`, { params: { user_id: id }, headers: header })
@@ -73,6 +77,10 @@ export class UserService {
 
   setOrganisationId(id: string): void {
       this.user.value.setOrganisationId = id
+  }
+
+  getDashboardId(): string {
+    return this.user.value.dashboardId
   }
 
   isMaximumUser(): boolean {

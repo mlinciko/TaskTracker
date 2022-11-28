@@ -1,0 +1,26 @@
+.dash-container {
+    width: 1000px;
+    margin: 40px auto;
+
+    .dash-title {
+        font-size: 17px;
+        font-weight: 600;
+        font-style: oblique;
+        margin: 20px 0;
+        width: auto;
+        color: #BD0D22;
+        display: inline-block;
+        border-bottom: 3px solid #BD0D22;
+    }
+
+    .tracks {
+        display: grid;
+        grid-template: 1fr/1fr 1fr 1fr 1fr 1fr;
+        gap: 5px;
+
+        .track-item {
+            width: 100%;
+            background-color: rgba(213,219,230, 0.4);
+        }
+    }
+}

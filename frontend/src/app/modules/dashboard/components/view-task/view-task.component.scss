@@ -1,0 +1,89 @@
+@import url("../add-task/add-task.component.scss");
+
+:host {
+    ::ng-deep {
+        .dx-editor-filled.dx-texteditor-with-floating-label .dx-texteditor-input {
+            padding-top: 18px;
+            padding-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .dx-editor-filled.dx-texteditor-with-floating-label.dx-texteditor-empty .dx-texteditor-label {
+            font-size: 13px;
+        }
+
+        .dx-field-item:not(.dx-field-item-has-group):not(.dx-field-item-has-tabs):not(.dx-first-row):not(.dx-label-v-align) {
+            padding-top:18px;
+        }
+
+        .dx-texteditor.dx-editor-outlined.dx-state-readonly .dx-texteditor-input {
+            color: #000;
+        }
+
+        .dx-state-focused {
+            pointer-events:none;
+        }
+    }
+}
+
+.task-container {
+    .task-header {
+        display:flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .task-info {
+            width: 40%;
+
+            .task-general {
+                padding-bottom: 20px;
+
+                .task-name {
+                    margin-bottom:20px;
+
+                    span {
+                        font-size: 16px;
+                        font-weight: 500;
+                    }
+                }
+            }
+        }
+
+        .task-users {
+            align-self: flex-start;
+            background-color: rgba(255,87,34, 0.5);
+            padding: 20px;
+            border-radius: 5px;
+
+            .task-creator {
+                margin-bottom:10px;
+
+                span.task-creator__name {
+                    font-weight: 500;
+                }
+            }
+
+            .task-executor {
+                span.task-executor__name {
+                    font-weight: 500;
+                }
+            }
+        }
+
+        .task-dates {
+            background-color: #FBCEB1;
+            margin-top: 10px;
+            text-align: center;
+            padding: 10px 0;
+            border-radius: 5px;
+
+            .task-deadline span, .task-creation-date span {
+                font-weight: 500;
+            }
+        }
+    }
+
+    .task-desc {
+        margin-top:20px;
+    }
+}

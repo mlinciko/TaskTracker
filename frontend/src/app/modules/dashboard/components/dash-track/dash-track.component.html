@@ -1,0 +1,18 @@
+<div class="track-container">
+    <div class="track-title">
+        {{status.name}}
+    </div>
+    <div *ngIf="tasks.length > 0; else noData" class="tasks">
+        <div *ngFor="let task of tasks" class="task-item" [routerLink]="['/dashboard/task/', task._id]">
+            <div class="task-name" [matTooltip]="task.name">{{task.name}}</div>
+            <div class="task-executor-tool">executor:</div>
+            <div class="task-executor">{{task.executor.first_name}} {{task.executor.last_name}}</div>
+        </div>
+    </div>
+
+    <ng-template #noData>
+        <div class="no-data-text">
+            No data
+        </div>
+    </ng-template>
+</div>
