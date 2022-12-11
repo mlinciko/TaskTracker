@@ -86,7 +86,7 @@ export class EmployeesListComponent implements OnInit {
               console.log(e.row.data)
             },
             disabled: (e: any): boolean => {
-              if (e.row.data._id === this.currentUserId) {
+              if (e.row.data.user_id === this.currentUserId) {
                 return true
               }
               return false
@@ -101,12 +101,12 @@ export class EmployeesListComponent implements OnInit {
 
               result.then((dialogResult) => {
                 if (dialogResult) {
-                  this.deleteUser(e.row.data._id)
+                  this.deleteUser(e.row.data.user_id)
                 }
               })
             },
             disabled: (e: any): boolean => {
-              if (e.row.data._id === this.currentUserId) {
+              if (e.row.data.user_id === this.currentUserId) {
                 return true
               }
               return false
@@ -162,7 +162,7 @@ export class EmployeesListComponent implements OnInit {
     this.user.removeUser(id).subscribe(
       (res) => {
         this.loadData()
-        notify({ message: "User has been deleted successfully", type: "error", width: "auto"});
+        notify({ message: "User has been deleted successfully", type: "success", width: "auto"});
       },
       (err: HttpErrorResponse) => {
         if (err.error.message === 'Access token has been expired')
